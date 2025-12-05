@@ -32,7 +32,12 @@ public class Bullet : MonoBehaviour
 
     private void OnTouch(GameObject touch)
     {
+        if (touch.TryGetComponent(out BoxDestroy box))
+        {
+            box.SetBulletPosition(transform.position);
+        }
         
+        Destroy(gameObject);
     }
     
     
