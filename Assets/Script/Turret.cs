@@ -5,55 +5,101 @@ public class Turret : MonoBehaviour
 {
 
     [SerializeField] private float _detectionRange;
-    [SerializeField] private float _fireRate;
-    [SerializeField] private GameObject _player;
-    [SerializeField] private float _dps;
-
+    [SerializeField] private float _fireTime;
+    [SerializeField] private float _waitTime;
+    //[SerializeField] private float _dps;
+    [SerializeField] private GameObject _bullet;
+    [SerializeField] private Transform _bulletSpawn;
+    [SerializeField] private ParticleSystem _flash;
+    [SerializeField] private Transform _playerPosition;
     [SerializeField] private Transform _barrel;
     [SerializeField] private float _lerpCompensation;
 
-    
-    private Transform _playerPosition;
+    [SerializeField] private LayerMask _layers;
+
+    private bool _playerDetected = false;
+    private bool _doShoot = false;
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        if (!_player)
+        if(!_playerPosition)
         {
-            _player = GameObject.FindGameObjectWithTag("Tank");
+            _playerPosition = GameObject.FindWithTag("Tank").transform;
         }
+    }
+
+    private void OnEnable()
+    {
+        
+    }
+    private void OnDisable()
+    {
+        
     }
 
     // Update is called once per frame
     void Update()
     {
-        Vector3 distance = _playerPosition.position - _barrel.position;
-
-        if (_playerPosition != null && _playerPosition.magnitude < _detectionRange)
+        //_barrel.LookAt(_playerPosition);
+        
+        
+        if(_playerPosition != null)
         {
-            
+            Vector3 playerDirection = _playerPosition.position - _barrel.position;
+            if (playerDirection.magnitude < _detectionRange)
+            {
+                if (_playerDetected == false)
+                {
+                    StartCoroutine(ShootSequence_co());
+                    _playerDetected = true;
+                }
+                _barrel.rotation = Quaternion.Lerp(_barrel.rotation,
+                    Quaternion.LookRotation(playerDirection),
+                    _lerpCompensation * Time.deltaTime);
+            }
+            else
+            {
+                StopAllCoroutines();
+                _playerDetected = false;
+                _barrel.rotation = Quaternion.Lerp(_barrel.rotation,
+                    Quaternion.LookRotation(Vector3.forward),
+                    _lerpCompensation * Time.deltaTime);
+            }
+
+        }
+        else
+        {
+            StopAllCoroutines();
         }
         
-        Quaternion wishedRotation = Quaternion.LookRotation(distance);
-        _barrel.rotation = wishedRotation;
-
-        _barrel.rotation = Quaternion.Lerp(_barrel.rotation,Quaternion.LookRotation(Vector3.forward), _lerpCompensation * Time.deltaTime);
-            
-    }
-
-    private void DoLaserShooting()
-    {
-        if (Physics.Raycast(_barrel.position, _barrel.forward, out RaycastHit hit, Mathf.Infinity, _layers)) ;
+        if (_doShoot) DoShooting();
         
-        if 
     }
 
+    private void DoShooting()
+    {
+        Instantiate(_bullet, _bulletSpawn.position, _bulletSpawn.rotation);
+        _flash.Play();
+    }
+
+    private void OnDrawGizmos()
+    {
+        Gizmos.color = Color.red;
+        Gizmos.DrawWireSphere(_barrel.position, _detectionRange);
+    }
+    
     private IEnumerator ShootSequence_co()
     {
         do
         {
-            DoLaserShooting();
-            yield return new WaitForSeconds(_fireRate);
+            _doShoot = true;
+            yield return new WaitForSeconds(_fireTime);
+            
+            _doShoot = false;
+            yield return new WaitForSeconds(_waitTime);
+            
         } while (true);
-        
+
     }
 }

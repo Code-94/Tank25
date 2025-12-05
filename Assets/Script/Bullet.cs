@@ -4,6 +4,8 @@ public class Bullet : MonoBehaviour
 {
 
     [SerializeField] private float _bulletForce;
+
+    [SerializeField] private GameObject _Impact;
     
     private Rigidbody _rb;
     
@@ -27,6 +29,13 @@ public class Bullet : MonoBehaviour
     {
         Debug.Log("The bullet in collision with :" + collision.gameObject.name);
     }
+
+    private void OnTouch(GameObject touch)
+    {
+        
+    }
+    
+    
     
     
 }

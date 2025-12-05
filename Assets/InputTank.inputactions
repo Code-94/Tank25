@@ -189,6 +189,17 @@
                 },
                 {
                     "name": "",
+                    "id": "4d377eb1-d1a6-4807-8ae3-4f2dac0e1309",
+                    "path": "<Keyboard>/space",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Fire",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
                     "id": "76877273-ea3d-4c9f-b13f-c64a2b588684",
                     "path": "",
                     "interactions": "",
@@ -224,6 +235,39 @@
                     "name": "positive",
                     "id": "9b942fc2-53bc-4faf-ab90-5608f5a33701",
                     "path": "<DualShockGamepad>/rightStick/right",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Turret",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "1D Axis",
+                    "id": "3656a5af-fd91-4a58-a8a8-2298bcf62d8b",
+                    "path": "1DAxis",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Turret",
+                    "isComposite": true,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "negative",
+                    "id": "bc16aadd-d6a8-4db9-9281-e87900bd461b",
+                    "path": "<Keyboard>/leftArrow",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Turret",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "positive",
+                    "id": "0c1cd833-6478-4a6b-b4b5-3d641003e0b0",
+                    "path": "<Keyboard>/rightArrow",
                     "interactions": "",
                     "processors": "",
                     "groups": "",

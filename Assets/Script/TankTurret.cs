@@ -3,13 +3,11 @@ using UnityEngine.InputSystem;
 
 public class TankTurret : MonoBehaviour
 {
-    [SerializeField] private float _TurretSpeed;
 
-
-    private Transform _Turret;
-    private float _rotateInput;
+    [SerializeField] private float _TankTurretSpeed;
     
-
+    private float _TankTurretRotInput;
+    
     
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -20,12 +18,13 @@ public class TankTurret : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        transform.Translate(Vector3.forward * (_rotateInput * _TurretSpeed * Time.deltaTime));
+        transform.transform.Rotate(Vector3.up * _TankTurretRotInput * _TankTurretSpeed);
     }
 
-    public void TurretRot(InputAction.CallbackContext ctx)
+    public void TurretTank(InputAction.CallbackContext ctx)
     {
-        Debug.Log("Turret in rotation" + ctx.ReadValue<float>());
-        
+        Debug.Log("TurretTank in rotation" + ctx.ReadValue<float>());
+        _TankTurretRotInput = ctx.ReadValue<float>();
     }
+    
 }

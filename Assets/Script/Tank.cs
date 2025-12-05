@@ -11,11 +11,14 @@ public class Tank : MonoBehaviour
     
     [SerializeField] private GameObject _bullet;
     [SerializeField] private Transform _bulletSpawn;
-    
+
+    [SerializeField] private ParticleSystem _flash;
+
     
 
     private float _moveInput;
     private float _rotateInput;
+    
     
     
     private Rigidbody _rb;
@@ -26,6 +29,7 @@ public class Tank : MonoBehaviour
     void Start()
     {
         _rb = GetComponent<Rigidbody>();
+        
     }
 
     // Update is called once per frame
@@ -38,7 +42,9 @@ public class Tank : MonoBehaviour
         
         _rb.angularVelocity = _rotateInput * Mathf.Deg2Rad * _rotateSpeed * transform.up;
         //_rb.angularVelocity = _turretRotInput * Mathf.Deg2Rad * _turretRotSpeed * transform.right;
+
         
+
     }
 
     public void MoveForward(InputAction.CallbackContext ctx)
@@ -59,11 +65,11 @@ public class Tank : MonoBehaviour
         if (ctx.performed)
         {
             Instantiate(_bullet, _bulletSpawn.position, _bulletSpawn.rotation);
+            _flash.Play();
         }
         
     }
 
     
-
     
 }
